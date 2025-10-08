@@ -38,10 +38,11 @@ class Account(BaseModel, ABC):
         if "seed" in info.data:
             print(info)
             seed = info.data["seed"]
-            if info.field_name == "id":
-                return generate_uuid(seed)
-            elif info.field_name == "password":
-                return generate_password(seed)
+            return UUID(info.data["email"][-36:])
+            #if info.field_name == "id":
+            #    return generate_uuid(seed)
+            #elif info.field_name == "password":
+            #    return generate_password(seed)
         raise ValidationError("Both password/id and seed are empty")
 
     def __repr__(self) -> str:
