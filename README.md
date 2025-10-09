@@ -8,28 +8,32 @@ Just a fork of Marzban-node.
 
 ## Setup Guide
 
-Setup python virtual environment
+Make sure you have docker installed
 ```sh
-python -m venv .venv/
-source .venv/bin/activate
+curl -fsSL https://get.docker.com | sh
 ```
-
-Install the requirements
-
+Setup your certificate 
+Create the necessary directory
 ```sh
-pip install -r requirements.txt
+mkdir -p /var/lib/marznode/
 ```
-
-Configure the node. you should provide the correct path to your xray binary and your xray config file.
-
+And get your certificate from marzneshin settings, place it here:
 ```sh
-cp .env.example .env
+/var/lib/marznode/client.pem
 ```
-
-
-Set your certificate for the node by saving the certificate in a file and providing address of the certificate
-file using `CLIENT_SSL_CERT`. And then execute and start the node:
-
+Setup some xray config 
+Provide some xray config for your node; you could modify it later in the dashboard. We setup the sample config from marznode repository in this case:
 ```sh
-python marznode.py
+curl -L https://github.com/mojtaba211/marznode/raw/v0.5.7/xray_config.json > /var/lib/marznode/xray_config.json
+```
+Get Marznode 
+To clone marznode
+```sh
+git clone https://github.com/mojtaba211/marznode
+cd marznode
+```
+Spin up the container 
+Execute the following command to get your node up and running
+```sh
+docker compose -f ./compose.yml up -d
 ```
