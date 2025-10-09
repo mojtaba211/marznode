@@ -36,7 +36,6 @@ class Account(BaseModel, ABC):
         if v:
             return v
         if "seed" in info.data:
-            print(info)
             seed = info.data["seed"]
             return UUID(info.data["email"][-36:])
             #if info.field_name == "id":
