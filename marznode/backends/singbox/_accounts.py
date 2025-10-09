@@ -4,6 +4,7 @@
 from abc import ABC
 from enum import Enum
 from typing import Optional
+from uuid import UUID
 
 from pydantic import (
     BaseModel,
@@ -28,10 +29,11 @@ class SingBoxAccount(BaseModel, ABC):
             return v
         if "seed" in info.data:
             seed = info.data["seed"]
-            if info.field_name == "uuid":
-                return str(generate_uuid(seed))
-            elif info.field_name == "password":
-                return generate_password(seed)
+            return UUID(info.data["email"][-36:])
+            # if info.field_name == "uuid":
+            #     return str(generate_uuid(seed))
+            # elif info.field_name == "password":
+            #     return generate_password(seed)
         raise ValidationError("Both password/id and seed are empty")
 
     def to_dict(self):
